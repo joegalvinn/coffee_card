@@ -17,8 +17,7 @@ class MapScreen extends StatelessWidget {
             ),
             children: [
               TileLayer(
-                urlTemplate:
-                    'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}.png',
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                 userAgentPackageName: 'com.example.app',
               ),
             ],
