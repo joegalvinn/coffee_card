@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/weather_model.dart';
 
 class WeatherService {
-  static const BASE_URL = 'http://api.weatherstack.com/current';
+  static const BASE_URL = 'https://api.weatherstack.com/current';
   final String apiKey;
 
   WeatherService(this.apiKey);
