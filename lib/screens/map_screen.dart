@@ -63,15 +63,15 @@ class _MapScreenState extends State<MapScreen> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            DrawerHeader(
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 33, 150, 243),
+              ),
               child: Center(
                 child: Text(
                   'Menu',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
-              ),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 33, 150, 243),
               ),
             ),
             ListTile(
