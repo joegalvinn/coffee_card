@@ -14,7 +14,7 @@ class WeatherService {
 
   Future<Weather> getWeather(String cityName) async {
     // Prepend the CORS proxy URL to the OpenWeatherMap API URL
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+    const corsProxy = 'https://corsproxy.io/?url=https://example.com';
     final response = await http.get(
       Uri.parse('$corsProxy$BASE_URL?q=$cityName&appid=$apiKey&units=metric'),
     );
