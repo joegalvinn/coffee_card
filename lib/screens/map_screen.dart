@@ -77,12 +77,9 @@ class _MapScreenState extends State<MapScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.cloud),
-              title: const Center(
-                child: Text(
-                  'Weather Page',
-                  style: TextStyle(
-                      fontSize: 15, color: Color.fromARGB(255, 0, 0, 0)),
-                ),
+              title: const Text(
+                'Weather Page',
+                style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
               ),
               onTap: () {
                 Navigator.push(
@@ -91,6 +88,7 @@ class _MapScreenState extends State<MapScreen> {
                 );
               },
             ),
+            const Divider(),
             ListTile(
               leading: const Icon(Icons.web),
               title: const Text('Contact Us Page'),
@@ -101,6 +99,7 @@ class _MapScreenState extends State<MapScreen> {
                 );
               },
             ),
+            const Divider(),
           ],
         ),
       ),
