@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'weather_page.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -10,20 +11,17 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final MapController _mapController =
-      MapController(); // Controller for the map
-  final double _minZoom = 2.0; // Minimum zoom level
-  final double _maxZoom = 18.0; // Maximum zoom level
-  Color _resetButtonColor = Colors.blue; // Reset button color
-  Color _zoomInButtonColor = Colors.blue; // Zoom in button color
-  Color _zoomOutButtonColor = Colors.blue; // Zoom out button color
+  final MapController _mapController = MapController();
+  final double _minZoom = 2.0;
+  final double _maxZoom = 18.0;
 
-  // Function to reset the orientation to 0 degrees
+  // GlobalKey for Scaffold
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   void _resetOrientation() {
-    _mapController.rotate(0.0); // Reset rotation to 0 degrees
+    _mapController.rotate(0.0);
   }
 
-  // Function to zoom in (increase zoom level)
   void _zoomIn() {
     double currentZoom = _mapController.zoom;
     if (currentZoom < _maxZoom) {
@@ -31,7 +29,6 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  // Function to zoom out (decrease zoom level)
   void _zoomOut() {
     double currentZoom = _mapController.zoom;
     if (currentZoom > _minZoom) {
@@ -39,35 +36,21 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  // Function to handle button press color change
-  void _onButtonPress(Color buttonColor, String buttonType) {
-    setState(() {
-      if (buttonType == 'reset') {
-        _resetButtonColor = Colors.grey; // Change to a pressed color
-      } else if (buttonType == 'zoomIn') {
-        _zoomInButtonColor = Colors.grey; // Change to a pressed color
-      } else if (buttonType == 'zoomOut') {
-        _zoomOutButtonColor = Colors.grey; // Change to a pressed color
-      }
-    });
-    Future.delayed(const Duration(milliseconds: 100), () {
-      setState(() {
-        if (buttonType == 'reset') {
-          _resetButtonColor = Colors.blue; // Change back to original color
-        } else if (buttonType == 'zoomIn') {
-          _zoomInButtonColor = Colors.blue; // Change back to original color
-        } else if (buttonType == 'zoomOut') {
-          _zoomOutButtonColor = Colors.blue; // Change back to original color
-        }
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey, // Assign the global key here
       appBar: AppBar(
-        title: Center(
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {
+            // Use the scaffoldKey to open the drawer
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
+        title: null,
+        backgroundColor: const Color.fromARGB(255, 33, 150, 243),
+        flexibleSpace: Center(
           child: Image.asset(
             'images/nash-top-logo.png',
             width: 100,
@@ -75,20 +58,47 @@ class _MapScreenState extends State<MapScreen> {
             fit: BoxFit.contain,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 33, 150, 243),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Center(
+                child: Text(
+                  'Menu',
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 33, 150, 243),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.cloud),
+              title: const Text('Weather Page'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WeatherPage()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Stack(
         children: [
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              center: LatLng(51.509364, -0.128928), // Initial center
-              zoom: 3.2, // Initial zoom level
-              minZoom: _minZoom, // Minimum zoom level
-              maxZoom: _maxZoom, // Maximum zoom level
+              center: LatLng(51.509364, -0.128928),
+              zoom: 3.2,
+              minZoom: _minZoom,
+              maxZoom: _maxZoom,
               maxBounds: LatLngBounds(
-                LatLng(-85.05112878, -180.0), // South-West corner
-                LatLng(85.05112878, 180.0), // North-East corner
+                LatLng(-85.05112878, -180.0),
+                LatLng(85.05112878, 180.0),
               ),
             ),
             children: [
@@ -99,56 +109,93 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ],
           ),
-          // Reset orientation button
           Positioned(
-            bottom: 120,
+            bottom: 190,
             right: 20,
             child: FloatingActionButton(
-              onPressed: () {
-                _resetOrientation();
-                _onButtonPress(_resetButtonColor, 'reset');
-              },
-              backgroundColor: _resetButtonColor,
-              mini: true, // Make the button smaller
+              onPressed: _resetOrientation,
+              backgroundColor: Colors.blue,
               child: const Icon(
                 Icons.compass_calibration,
+                size: 35,
                 color: Colors.white,
               ),
             ),
           ),
-          // Zoom in button
+          Positioned(
+            bottom: 130,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: _zoomIn,
+              backgroundColor: Colors.blue,
+              child: const Icon(
+                Icons.zoom_in,
+                size: 35,
+                color: Colors.white,
+              ),
+            ),
+          ),
           Positioned(
             bottom: 70,
             right: 20,
             child: FloatingActionButton(
-              onPressed: () {
-                _zoomIn();
-                _onButtonPress(_zoomInButtonColor, 'zoomIn');
-              },
-              backgroundColor: _zoomInButtonColor,
-              mini: true,
+              onPressed: _zoomOut,
+              backgroundColor: Colors.blue,
               child: const Icon(
-                Icons.zoom_in,
+                Icons.zoom_out,
+                size: 35,
                 color: Colors.white,
               ),
             ),
           ),
-          // Zoom out button
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: FloatingActionButton(
-              onPressed: () {
-                _zoomOut();
-                _onButtonPress(_zoomOutButtonColor, 'zoomOut');
-              },
-              backgroundColor: _zoomOutButtonColor,
-              mini: true,
-              child: const Icon(
-                Icons.zoom_out,
-                color: Colors.white,
-              ),
-            ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.1,
+            minChildSize: 0.1,
+            maxChildSize: 0.5,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 6,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400],
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 7,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: const Icon(
+                              Icons.cloud,
+                              color: Colors.blue,
+                            ),
+                            title: Text('Day ${index + 1}: Sunny'),
+                            subtitle: const Text('High: 25°C, Low: 15°C'),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
