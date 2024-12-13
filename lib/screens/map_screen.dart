@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'weather_page.dart';
+import 'web_view_page.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -69,18 +70,34 @@ class _MapScreenState extends State<MapScreen> {
               ),
               child: Center(
                 child: Text(
-                  'Menu',
+                  'Pages',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
               ),
             ),
             ListTile(
               leading: const Icon(Icons.cloud),
-              title: const Text('Weather Page'),
+              title: const Center(
+                child: Text(
+                  'Weather Page',
+                  style: TextStyle(
+                      fontSize: 15, color: Color.fromARGB(255, 0, 0, 0)),
+                ),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const WeatherPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.web),
+              title: const Text('Contact Us Page'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WebViewApp()),
                 );
               },
             ),
