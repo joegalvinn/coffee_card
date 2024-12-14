@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'weather_page.dart';
 import 'web_view_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -165,50 +166,194 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.1,
             minChildSize: 0.1,
-            maxChildSize: 0.5,
-            builder: (context, scrollController) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 6,
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: 7,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            leading: const Icon(
-                              Icons.cloud,
-                              color: Colors.blue,
+            maxChildSize: 0.9,
+            initialChildSize: 0.1,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Material(
+                elevation: 10, // Adds shadow to the sheet
+                shadowColor: Colors.black26, // Sets the shadow color
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ), // Rounded corners
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ), // Match the border radius
+                  ),
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.9,
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Fishing Spot Title
+                                Center(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 10, bottom: 20),
+                                    height: 5,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const Center(
+                                  child: Text(
+                                    "Sunny Lake Fishing Spot",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+
+                                // Location Information
+                                const Text(
+                                  "Location:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const Text(
+                                  "Latitude: 51.509364, Longitude: -0.128928",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                                const SizedBox(height: 20),
+
+                                // Fish Species
+                                const Text(
+                                  "Fish Species Available:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                ...[
+                                  "Bass",
+                                  "Trout",
+                                  "Catfish",
+                                  "Salmon",
+                                  "Bluegill"
+                                ].map((fish) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4.0),
+                                      child: Row(
+                                        children: [
+                                          const FaIcon(
+                                            FontAwesomeIcons.fish,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            fish,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                const SizedBox(height: 20),
+
+                                // Weather Information
+                                const Text(
+                                  "Weather Conditions:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const Text(
+                                  "Sunny, 25°C, Light Breeze",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                                const SizedBox(height: 20),
+
+                                // Fishing Tips
+                                const Text(
+                                  "Fishing Tips:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const Text(
+                                  "- Use lightweight tackle for better results.\n"
+                                  "- Early mornings and late evenings are the best times.\n"
+                                  "- Look for shaded areas near trees or rocks.\n"
+                                  "- Keep quiet to avoid scaring the fish.",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                                const SizedBox(height: 20),
+
+                                // Nearby Amenities
+                                const Text(
+                                  "Nearby Amenities:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                ...[
+                                  "Bait Shop - 500m",
+                                  "Boat Rental - 1km",
+                                  "Restroom - 200m",
+                                  "Parking Lot - 100m"
+                                ].map((amenity) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4.0),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.place,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            amenity,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                const SizedBox(height: 20),
+                              ],
                             ),
-                            title: Text('Day ${index + 1}: Sunny'),
-                            subtitle: const Text('High: 25°C, Low: 15°C'),
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
