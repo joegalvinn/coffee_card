@@ -68,8 +68,8 @@ class _SplashScreenState extends State<SplashScreen>
           child: Center(
             child: Image.asset(
               'images/fishlogo.png',
-              width: 300, // Adjust the width as needed
-              height: 300, // Adjust the height as needed
+              width: 200, // Adjust the width as needed
+              height: 200, // Adjust the height as needed
               fit: BoxFit.contain, // Ensure the image scales correctly
             ),
           ),

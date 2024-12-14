@@ -48,7 +48,8 @@ class _WeatherPageState extends State<WeatherPage> {
       appBar: AppBar(
         title: const Text(
           'Weather Page',
-          style: TextStyle(fontSize: 24, color: Colors.white),
+          style: TextStyle(
+              fontSize: 26, fontWeight: FontWeight.w600, color: Colors.white),
         ),
         backgroundColor: Colors.blue,
         centerTitle: true, // Centers the title
@@ -70,7 +71,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 '${_weather!.cityName}, ${_weather!.country}',
                 style: const TextStyle(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             const SizedBox(height: 20),
@@ -128,7 +129,14 @@ class _WeatherPageState extends State<WeatherPage> {
             // Spacer to push the input fields and button to the bottom
             const Spacer(),
 
+            const Text(
+              'This uses a basic free API to fetch the Data and Icon, this can be upgraded to make a much smarter and more intereactive look.',
+              style: TextStyle(
+                  fontSize: 14, color: Color.fromARGB(255, 187, 43, 43)),
+              textAlign: TextAlign.center,
+            ),
             // Input field and button at the bottom
+            const Spacer(),
             TextField(
               controller: _cityController,
               decoration: const InputDecoration(
