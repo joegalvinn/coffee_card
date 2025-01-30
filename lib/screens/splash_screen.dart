@@ -67,12 +67,17 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           child: Center(
             child: Image.asset(
-              'images/fishlogo.png',
-              width: 200, // Adjust the width as needed
-              height: 200, // Adjust the height as needed
-              fit: BoxFit.contain, // Ensure the image scales correctly
+              'images/splash-gif.gif',
             ),
           ),
+          // child: Center(
+          //   child: Image.asset(
+          //     'images/fishlogo.png',
+          //     width: 200, // Adjust the width as needed
+          //     height: 200, // Adjust the height as needed
+          //     fit: BoxFit.contain, // Ensure the image scales correctly
+          //   ),
+          // ),
         ),
       ),
     );
